@@ -4,5 +4,8 @@
     "../nvda/source",
     "../nvda/miscDeps/python"
   ],
-  "reportMissingImports": false
+  "reportMissingImports": false,
+  "exclude": [
+    "site_scons"
+  ]
 }
