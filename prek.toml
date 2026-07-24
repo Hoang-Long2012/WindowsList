@@ -110,4 +110,3 @@ hooks = [
     name = "lint with ruff",
   }
 ]
-]
