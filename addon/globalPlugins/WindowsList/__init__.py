@@ -1,5 +1,5 @@
 # Windows List
-# Copyright (C) 2026 Hoàng Lon
+# Copyright (C) 2026 Hoàng Long
 
 from scriptHandler import script
 from logHandler import log
