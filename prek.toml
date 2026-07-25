@@ -41,7 +41,6 @@ hooks = [
       "c",
       "c++",
       "batch",
-      "markdown",
       "toml",
       "yaml",
       "powershell"
