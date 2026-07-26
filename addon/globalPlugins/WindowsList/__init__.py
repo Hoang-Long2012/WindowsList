@@ -14,6 +14,7 @@ import globalVars
 
 # For translation
 addonHandler.initTranslation()
+WS_EX_TOOLWINDOW = 0x80
 
 def disableOnSecureScreen(plugin):
 	if globalVars.appArgs.secure:
@@ -38,9 +39,16 @@ def getWindowsList():
 	windows = []
 	for obj in api.getDesktopObject().children:
 		try:
-			name = (obj.name or _("No title")).strip()
-			if name and obj.isFocusable and obj.role == controlTypes.Role.WINDOW:
-				windows.append((name, obj))
+			name = (obj.name or "").strip()
+			if not name:
+				continue
+			if not obj.role == controlTypes.Role.WINDOW:
+				continue
+			if not obj.presentationType == obj.presType_content:
+				continue
+			if obj.extendedWindowStyle & WS_EX_TOOLWINDOW:
+				continue
+			windows.append((name, obj))
 		except Exception:
 			log.exception(f"Failed to enumerate window: {obj.name or 'No title'}")
 	if not windows:
@@ -67,6 +75,7 @@ class WindowsListDialog(wx.Dialog):
 		self.listBox.Bind(wx.EVT_LISTBOX_DCLICK, self.onActivate)
 		self.Bind(wx.EVT_BUTTON, self.onActivate, id=wx.ID_OK)
 		self.CentreOnScreen()
+		self.listBox.SetFocus()
 
 	def onActivate(self, evt):
 		index = self.listBox.GetSelection()
